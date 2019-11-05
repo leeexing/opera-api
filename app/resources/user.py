@@ -42,11 +42,3 @@ class UserDetail(Resource):
     def delete(self, user_id):
         """删除用户"""
         return usermanager.user_delete(user_id)
-
-
-@ns.route('/avatar')
-class UserAvatar(Resource):
-
-    def post(self):
-        """修改用户头像"""
-        return usermanager.modify_user_avatar()

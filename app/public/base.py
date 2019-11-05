@@ -13,7 +13,6 @@ from app.db import MYSQL_DB, MONGO_DB
 from app.util.logger import create_logger
 from app.util.response import ResponseHelper
 from app.public.argsparse import PAGING_PARSER
-from app.util.connector import get_rabbitmq_connection
 
 
 class BaseHandler:

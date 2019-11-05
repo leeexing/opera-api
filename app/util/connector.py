@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """数据库连接器模块"""
 
-import pika
 from pymongo import MongoClient
 from redis import StrictRedis, ConnectionPool
 
@@ -34,12 +33,6 @@ def get_mongo_trackio_connection():
         mongo_client_trackio = MongoClient(host=Config.MONGO_URI_TRACKIO)
         return mongo_client_trackio
     return mongo_client_trackio
-
-
-def get_rabbitmq_connection():
-    """Rabbitmq消息队列连接"""
-    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
-    return connection
 
 
 class RedisConnect:

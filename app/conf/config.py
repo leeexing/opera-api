@@ -21,14 +21,6 @@ class Config(object):
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=60*24*7)
     JWT_ERROR_MESSAGE_KEY = 'nuctech'
 
-    # -七牛上传
-    QINIU_DOMAIN_PREFIX = 'http://nathing.leeing.cn/'
-    QINIU_ACCESS_KEY = os.environ.get(
-        'QINIU_ACCESS_KEY', 'q6QLur7zYpyj9rUAeUwkKA3g2BxiGRugfevdqW7r')
-    QINIU_SECRET_KEY = os.environ.get(
-        'QINIU_SECRET_KEY', 'l8AfWuWW4DfK1TrZyPzUsXc8WKa_YojUgCUG040u')
-    QINIU_BUCKET_NAME = 'nathing'
-
     # -db: mysql
     SQLALCHEMY_TRACK_MODIFICATIONS = False # 是否开启跟踪; 开启的话，每次请求结束都会自动提交事务
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://admin:123456!@#@10.15.225.23/SourceData'

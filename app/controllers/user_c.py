@@ -4,7 +4,6 @@
 from flask import request, current_app
 from flask_jwt_extended import jwt_required
 
-from app.util.storage import qiniu_storage
 from app.public.base import BaseHandler
 from app.public.userTypeName import usertypename
 from app.models.user import User, EnumUserType
@@ -138,39 +137,6 @@ class UserManager(BaseHandler):
                 self.logger.error('Database Error: %s', str(e))
                 return self.Response.return_server_error()
             return self.Response.return_true_data('用户删除成功!')
-        except Exception as e:
-            self.logger.error('Server Error: %s', str(e))
-            return self.Response.return_server_error()
-
-    @jwt_required
-    def modify_user_avatar(self):
-        """用户头像上传"""
-        try:
-            identity = self.get_user()
-            username = identity.get('username')
-            avatar = request.files.get('avatar')
-            if not avatar:
-                return self.Response.return_false_data(msg='图像未上传!')
-            avatar_data = avatar.read()
-            try:
-                image_name = qiniu_storage(avatar_data)
-            except Exception as e:
-                self.logger.error('上传七牛云错误：%s', str(e))
-                return self.Response.return_false_data(msg='七牛云图片上传失败!')
-            avatar_url = current_app.config['QINIU_DOMAIN_PREFIX'] + image_name
-            try:
-                User.query.filter_by(UserName=username).update(
-                    {'AvatarUrl': avatar_url})
-                self.db.session.commit()
-            except Exception as e:
-                self.db.session.rollback()
-                self.logger.error('Database Error: %s', str(e))
-                return self.Response.return_false_data(msg='用户头像保存失败!')
-            data = {
-                'avatarUrl': avatar_url,
-                'avatarName': image_name
-            }
-            return self.Response.return_true_data(data)
         except Exception as e:
             self.logger.error('Server Error: %s', str(e))
             return self.Response.return_server_error()

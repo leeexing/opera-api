@@ -5,14 +5,14 @@ LABEL author='leeing'
 
 # USER root
 
-WORKDIR /app
+WORKDIR /code
 
-ADD . /app
+ADD . /code
 
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
-EXPOSE 5280
+EXPOSE 6281
 
-ENV NAME leeing
+ENV NAME opera
 
 CMD ["python", "manage.py", "runserver"]
