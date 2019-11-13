@@ -6,25 +6,30 @@ from datetime import datetime
 from flask_restplus import fields
 
 
-# -采集图像
-capture_image_field = {
-    'TaskID': fields.String(example='nuctech00001', description='上传任务唯一ID'),
-    'FacilityCode': fields.String(example='beijing54541', description='终端设备编号'),
-    'PackageCode': fields.String(example='4658713245', description='实际包号'),
-    'OssStoreKey': fields.String(example='storage&^$%^&*()', description='存储标识值'),
-    'StorageSize': fields.Integer(example=2048, description='包大小KB'),
-    'FilterTag': fields.Integer(default=0, description='筛图的标记，0表示未经过筛图的，1表示经过筛图而上传的'),
-    'TaskStatus': fields.Integer(default=0, description='原图像处理状态（0：未处理，1：处理中，2：处理完成）'),
-    'UploadElapsedTime': fields.Float(example=123456.789, description='上传耗时'),
-    'GaitherTime': fields.DateTime(example='2018-08-07T14:22:40.8156442+08:00', description='采集时间'),
-    'UploadTime': fields.DateTime(example='2018-11-13T16:22:25.7562285+08:00', description='上传时间'),
+base_chart_field = {
+    'name': fields.String(),
+    'value': fields.Integer()
+}
+business_field = {
+    'method': fields.String(),
+    'cName': fields.String(),
+    'name': fields.String(),
+    'value': fields.Integer()
 }
 
-
-# -采集图像:响应
-capture_image_res_field = {
-    'ID': fields.Integer(description='ID'),
-    **capture_image_field
+operation_field = {
+    'id': fields.String(attribute='_id'),
+    'weekIndex': fields.String(),
+    'startData': fields.String(),
+    'endData': fields.String(),
+    'comments': fields.String(),
+    'pageView': fields.Integer(),
+    'api': fields.Nested(base_chart_field, default=[]),
+    'business': fields.Nested(business_field, default=[]),
+    'tenements': fields.Nested(base_chart_field, default=[]),
+    'description': fields.String(),
+    'createTime': fields.String(attribute=lambda img: img['createTime'].strftime('%Y-%m-%d %H:%M:%S.%f')),
+    'modifyTime': fields.String(attribute=lambda img: img['modifyTime'].strftime('%Y-%m-%d %H:%M:%S.%f')),
 }
 
 

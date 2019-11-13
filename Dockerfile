@@ -1,18 +1,10 @@
-FROM leeing0712/flaskapp
+FROM python-app
 
 LABEL version='1.0'
 LABEL author='leeing'
 
-# USER root
+RUN pip3 install pika -i https://pypi.tuna.tsinghua.edu.cn/simple
 
-WORKDIR /code
+EXPOSE 80 5000 6281 8080
 
-ADD . /code
-
-RUN pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
-
-EXPOSE 6281
-
-ENV NAME opera
-
-CMD ["python", "manage.py", "runserver"]
+ENTRYPOINT []

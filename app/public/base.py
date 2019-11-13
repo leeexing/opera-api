@@ -18,7 +18,7 @@ from app.public.argsparse import PAGING_PARSER
 class BaseHandler:
     """请求处理基类"""
 
-    def __init__(self, log_name='SOURCE_DATA'):
+    def __init__(self, log_name='OPERA'):
         self.logger = create_logger(log_name)
 
     @property
@@ -29,12 +29,7 @@ class BaseHandler:
     @property
     def mongo(self):
         """获取 `sourceData` 数据库"""
-        return MONGO_DB.cx['sourceData']
-
-    @property
-    def rabbitmq_conn(self):
-        """提供对rabbitmq消息队列的连接"""
-        return get_rabbitmq_connection()
+        return MONGO_DB.cx['opera']
 
     @property
     def Response(self):
